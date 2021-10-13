@@ -69,15 +69,19 @@ const refs = {
   galleryLightboxWindow: document.querySelector('.lightbox'),
   galleryOverlay: document.querySelector('.lightbox__overlay'),
   galleryContent: document.querySelector('.lightbox__content'),
-  galleryButtonClose: document.querySelector('.lightbox__button'),
   galleryLink: document.querySelector('.gallery__link'),
+  modalImage: document.querySelector('.lightbox__image'),
+  buttonClose: document.querySelector('[data-action="close-lightbox"]'),
 }
 const galleryMarkup = createGalleryCardMarkup(galleryItems);
 
 refs.galleryUlEl.insertAdjacentHTML('beforeend', galleryMarkup);
 
 refs.galleryUlEl.addEventListener('click', onClick);
-// refs.galleryLink.addEventListener('click', stop => stop.preventDefault(), false);
+refs.buttonClose.addEventListener('click', offCloseButton);
+document.addEventListener('keydown', pressEscKeyboard);
+document.addEventListener('click', closeOverlay);
+
 
 
 function createGalleryCardMarkup(galleryItems) {
@@ -85,7 +89,11 @@ function createGalleryCardMarkup(galleryItems) {
     .map(({ preview, original, description }) => {
       return `
     <li class="gallery__item">
-    <a class="gallery__link" href="${original}">
+    <a
+    class="gallery__link"
+    href="${original}"
+    onclick="return false"
+  >
     <img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}"/>
     </a>
     </li>
@@ -99,5 +107,38 @@ function onClick(e) {
   if (e.target.nodeName !== 'IMG') {
     return;
   }
-  return e.dataset.source;
+  refs.galleryLightboxWindow.classList.add('is-open');
+  refs.modalImage.src = e.target.dataset.source;
+  refs.modalImage.alt = e.target.alt;
 }
+
+function offCloseButton(e) {
+  refs.galleryLightboxWindow.classList.remove('is-open');
+  refs.modalImage.src = "";
+  refs.modalImage.alt = "";
+  
+}
+
+function pressEscKeyboard(e) {
+  if (e.key === "Escape" || closeOverlay) {
+    refs.galleryLightboxWindow.classList.remove('is-open');
+    refs.modalImage.src = "";
+    refs.modalImage.alt = "";
+  }
+}
+function closeOverlay(e) {
+if (e.target.nodeName !== 'IMG') {
+    refs.galleryLightboxWindow.classList.remove('is-open');
+    refs.modalImage.src = "";
+    refs.modalImage.alt = "";
+  }
+}
+// document.addEventListener("keydown", (e) => {
+//     console.log(e.code);
+//     if (e.key === "ArrowRight") {
+//         plusSlide()
+//     }
+//     if (e.key === "ArrowLeft") {
+//         minusSlide()
+//     }
+// })
