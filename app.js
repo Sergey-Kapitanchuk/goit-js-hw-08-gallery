@@ -120,11 +120,14 @@ function offCloseButton(e) {
 }
 
 function pressEscKeyboard(e) {
-  if (e.key === "Escape" || closeOverlay) {
+  if (e.key === 'Escape') {
     refs.galleryLightboxWindow.classList.remove('is-open');
     refs.modalImage.src = "";
     refs.modalImage.alt = "";
+    
   }
+  console.log(e.key)
+  
 }
 function closeOverlay(e) {
 if (e.target.nodeName !== 'IMG') {
