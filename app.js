@@ -70,10 +70,15 @@ const refs = {
   galleryOverlay: document.querySelector('.lightbox__overlay'),
   galleryContent: document.querySelector('.lightbox__content'),
   galleryButtonClose: document.querySelector('.lightbox__button'),
+  galleryLink: document.querySelector('.gallery__link'),
 }
 const galleryMarkup = createGalleryCardMarkup(galleryItems);
 
 refs.galleryUlEl.insertAdjacentHTML('beforeend', galleryMarkup);
+
+refs.galleryUlEl.addEventListener('click', onClick);
+// refs.galleryLink.addEventListener('click', stop => stop.preventDefault(), false);
+
 
 function createGalleryCardMarkup(galleryItems) {
   return galleryItems
@@ -87,4 +92,12 @@ function createGalleryCardMarkup(galleryItems) {
       `
     })
     .join('');
+  
+}
+
+function onClick(e) {
+  if (e.target.nodeName !== 'IMG') {
+    return;
+  }
+  return e.dataset.source;
 }
