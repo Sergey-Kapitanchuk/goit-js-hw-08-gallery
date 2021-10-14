@@ -113,28 +113,27 @@ function onClick(e) {
 }
 
 function offCloseButton(e) {
-  refs.galleryLightboxWindow.classList.remove('is-open');
-  refs.modalImage.src = "";
-  refs.modalImage.alt = "";
+  removeEventListener()
   
 }
 
 function pressEscKeyboard(e) {
   if (e.key === 'Escape') {
-    refs.galleryLightboxWindow.classList.remove('is-open');
-    refs.modalImage.src = "";
-    refs.modalImage.alt = "";
-    
+    removeEventListener()
+    console.log(e.key)
   }
-  console.log(e.key)
   
 }
 function closeOverlay(e) {
 if (e.target.nodeName !== 'IMG') {
+    removeEventListener()
+  }
+}
+function removeEventListener(e) {
     refs.galleryLightboxWindow.classList.remove('is-open');
     refs.modalImage.src = "";
     refs.modalImage.alt = "";
-  }
+    document.removeEventListener('keydown', pressEscKeyboard);
 }
 // document.addEventListener("keydown", (e) => {
 //     console.log(e.code);
