@@ -79,8 +79,7 @@ refs.galleryUlEl.insertAdjacentHTML('beforeend', galleryMarkup);
 
 refs.galleryUlEl.addEventListener('click', onClick);
 refs.buttonClose.addEventListener('click', offCloseButton);
-document.addEventListener('keydown', pressEscKeyboard);
-document.addEventListener('click', closeOverlay);
+
 
 
 
@@ -110,6 +109,8 @@ function onClick(e) {
   refs.galleryLightboxWindow.classList.add('is-open');
   refs.modalImage.src = e.target.dataset.source;
   refs.modalImage.alt = e.target.alt;
+  document.addEventListener('keydown', pressEscKeyboard);
+  document.addEventListener('click', closeOverlay);
 }
 
 function offCloseButton(e) {
@@ -133,7 +134,8 @@ function removeEventListener(e) {
     refs.galleryLightboxWindow.classList.remove('is-open');
     refs.modalImage.src = "";
     refs.modalImage.alt = "";
-    document.removeEventListener('keydown', pressEscKeyboard);
+  document.removeEventListener('keydown', pressEscKeyboard)
+  document.removeEventListener('click', closeOverlay)
 }
 // document.addEventListener("keydown", (e) => {
 //     console.log(e.code);
